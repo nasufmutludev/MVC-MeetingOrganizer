@@ -1,0 +1,116 @@
+﻿@model IEnumerable<MOEntities.Meetings>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #divtoplantı {
+        margin-bottom: 15px;
+        margin-left: 15px;
+        margin-top: 15px;
+    }
+    
+    
+</style>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/assets/css/paper-dashboard.css" rel="stylesheet" />
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="content table-responsive table-full-width">
+                        <table class="table table-striped">
+
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.MeetingSubject)</th>                                    
+                                    <th>@Html.DisplayNameFor(model => model.RoomID)</th>
+                                    <th>@Html.DisplayNameFor(model => model.StartingTime)</th>
+                                    <th>@Html.DisplayNameFor(model => model.EndTime)</th>                                    
+                                    <th>Düzenle</th>
+                                    <th>Sil</th>
+                                </tr>
+                            </thead>
+                            <tbody id="meetingtable">
+                                <tr id="LoadingStatus" style="color:red"></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="divtoplantı">
+                        @Html.ActionLink("Toplantı Oluştur", "Add", null, htmlAttributes: new { @class = "btn btn-default", @style = "margin-bottom:10px" })
+                        @Html.ActionLink("Katılımcı Ekle", "Create", "Subscriber", null, htmlAttributes: new { @class = "btn btn-default", @style = "margin-bottom:10px" })
+                    </div>                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = function () {
+        GetMeetings();
+    }  
+    $("#LoadingStatus").html("Loading....");
+    function tableCreate(json) {
+        $('#meetingtable').html("");
+        var tr;
+        for (var i = 0; i < json.length; i++) {
+            tr = $('<tr/>');            
+            tr.append("<td>" + json[i].MeetingSubject+ "</td>");            
+            tr.append("<td>" + json[i].RoomName + "</td>");
+            tr.append("<td>" + moment(json[i].StartingTime).format("DD.MM.YYYY") + "</td>");
+            tr.append("<td>" + moment(json[i].EndTime).format("HH:mm") + "</td>");            
+            tr.append("<td><a href='/Meetings/Edit/" + json[i].ID + "' class='btn btn-warning'>Düzenle</a> </td>");
+            tr.append("<td><input type='button' class='btn btn-danger' value='Sil' onclick='Delete(" + json[i].ID + ")'/></td>");
+            $('#meetingtable').append(tr);
+        }
+    }
+    function Delete(ID) {
+        var result = confirm("Bu nesneyi silmek istediğinize emin misiniz?")
+
+        if (result != true) return;
+
+        $.ajax({
+            url: "/Meetings/Delete",
+            type: "Post",
+            data: { id: ID },
+            success: function (result) {
+                if (result.IsSuccess) {
+                    GetMeetings();                    
+                }
+                else {
+                    alert(result.Message);
+                }
+            }
+        });
+    }
+    function GetMeetings() {
+        $.ajax({
+            url: "/Meetings/GetList",
+            type: "Get",
+            success: function (jsonResult) {
+                tableCreate(jsonResult);
+            }
+        });
+    }
+    $(document).ready(function () {
+
+        demo.initChartist();
+
+        $.notify({
+            icon: 'ti-user',
+            message: "Toplantı bildirim paneline hoşgeldin-@HttpContext.Current.User.Identity.Name"
+
+        }, {
+                type: 'success',
+                timer: 10000
+            });
+
+    });
+</script>
+

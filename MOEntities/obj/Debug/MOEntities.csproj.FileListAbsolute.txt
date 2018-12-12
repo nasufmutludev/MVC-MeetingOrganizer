@@ -1,0 +1,12 @@
+C:\Meeting\MeetingOrganizer\MOEntities\bin\Debug\MOEntities.dll
+C:\Meeting\MeetingOrganizer\MOEntities\bin\Debug\MOEntities.pdb
+C:\Meeting\MeetingOrganizer\MOEntities\obj\Debug\MOEntities.csproj.CoreCompileInputs.cache
+C:\Meeting\MeetingOrganizer\MOEntities\obj\Debug\MOEntities.dll
+C:\Meeting\MeetingOrganizer\MOEntities\obj\Debug\MOEntities.pdb
+C:\Meeting\MeetingOrganizer\MOEntities\obj\Debug\MOEntities.csprojResolveAssemblyReference.cache
+C:\Users\nasuf\Desktop\Meeting\MeetingOrganizer\MOEntities\bin\Debug\MOEntities.dll
+C:\Users\nasuf\Desktop\Meeting\MeetingOrganizer\MOEntities\bin\Debug\MOEntities.pdb
+C:\Users\nasuf\Desktop\Meeting\MeetingOrganizer\MOEntities\obj\Debug\MOEntities.csprojAssemblyReference.cache
+C:\Users\nasuf\Desktop\Meeting\MeetingOrganizer\MOEntities\obj\Debug\MOEntities.csproj.CoreCompileInputs.cache
+C:\Users\nasuf\Desktop\Meeting\MeetingOrganizer\MOEntities\obj\Debug\MOEntities.dll
+C:\Users\nasuf\Desktop\Meeting\MeetingOrganizer\MOEntities\obj\Debug\MOEntities.pdb

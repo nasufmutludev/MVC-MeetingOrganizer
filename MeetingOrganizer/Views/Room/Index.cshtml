@@ -1,0 +1,96 @@
+﻿@model IEnumerable<MOEntities.Room>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #divtoplantı {
+        margin-bottom: 15px;
+        margin-left: 15px;
+        margin-top: 15px;
+    }
+    #bodycenter{
+        margin-right:auto;
+        margin-left:auto;
+    }
+</style>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/assets/css/paper-dashboard.css" rel="stylesheet" />
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="content table-responsive table-full-width">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.RoomName)</th>                                    
+                                    <th>Düzenle</th>
+                                    <th>Sil</th>
+                                </tr>
+                            </thead>
+                            <tbody id="roomtable">
+                                <tr id="LoadingStatus" style="color:red"></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="divtoplantı">
+                        @Html.ActionLink("Oda Oluştur", "Add", null, htmlAttributes: new { @class = "btn btn-default", @style = "margin-bottom:10px" })                        
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    window.onload = function () {
+        GetRoom();
+    }
+    $("#LoadingStatus").html("Loading....");
+    function tableCreate(json) {
+        $('#roomtable').html("");
+        var tr;
+        for (var i = 0; i < json.length; i++) {
+            tr = $('<tr/>');            
+            tr.append("<td>" + json[i].RoomName + "</td>");           
+            tr.append("<td><a href='/Room/Edit/" + json[i].ID + "' class='btn btn-warning'>Düzenle</a> </td>");
+            tr.append("<td><input type='button' class='btn btn-danger' value='Sil' onclick='Delete(" + json[i].ID + ")'/></td>");
+            $('#roomtable').append(tr);
+        }
+    }
+    function Delete(ID) {
+        var result = confirm("Bu nesneyi silmek istediğinize emin misiniz?")
+
+        if (result != true) return;
+
+        $.ajax({
+            url: "/Room/Delete",
+            type: "Post",
+            data: { id: ID },
+            success: function (result) {
+                if (result.IsSuccess) {
+                    GetRoom();
+                }
+                else {
+                    alert(result.Message);
+                }
+            }
+        });
+    }
+    function GetRoom() {
+        $.ajax({
+            url: "/Room/GetList",
+            type: "Get",
+            success: function (jsonResult) {
+                tableCreate(jsonResult);
+            }
+        });
+    }
+</script>
+

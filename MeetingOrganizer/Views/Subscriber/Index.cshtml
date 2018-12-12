@@ -1,0 +1,70 @@
+﻿@model IEnumerable<MOEntities.Subscriber>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    #divtoplantı {
+        margin-bottom: 15px;
+        margin-left: 15px;
+        margin-top: 15px;
+    }
+</style>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/assets/css/paper-dashboard.css" rel="stylesheet" />
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="content table-responsive table-full-width">
+                        <table class="table table-striped">
+
+                            <thead>
+                                <tr>
+                                    <th>@Html.DisplayNameFor(model => model.Name)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Surname)</th>
+                                    <th>@Html.DisplayNameFor(model => model.Meetings.MeetingSubject)</th>
+                                    <th>Düzenle</th>
+                                    <th>Sil</th>
+                                </tr>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Surname)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Meetings.MeetingSubject)
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Düzenle", "Edit", new { id = item.ID }, new { @class = "btn btn-warning" })                                          
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Sil", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
+                                        </td>
+                                    </tr>
+                                }
+                            </thead>
+                            <tbody id="meetingtable">
+                                <tr id="LoadingStatus" style="color:red"></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="divtoplantı">
+                        @Html.ActionLink("Katılımcı Ekle", "Create", null, htmlAttributes: new { @class = "btn btn-default", @style = "margin-bottom:10px" })
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

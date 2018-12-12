@@ -1,0 +1,42 @@
+﻿@model MOEntities.Subscriber
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h>Silmek istediğinize Emiin Misiniz?</h>
+<div>
+    <h4>Katılımcı</h4>
+    <br />
+    <dl class="dl-horizontal">
+        @*Listelemek İçin*@
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+            @*dt tanımlamak için*@
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+            @*dd açıklamak için*@
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Surname)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Meetings.MeetingSubject)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Meetings.MeetingSubject)
+        </dd>
+    </dl>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color">
+            <input type="submit" value="Sil" class="btn btn-default" style="margin-bottom:10px" />
+            @Html.ActionLink("Katılımcı Listesi", "Index", null, htmlAttributes: new { @class = "btn btn-info", @style = "margin-bottom:10px" })
+        </div>
+    }
+</div>

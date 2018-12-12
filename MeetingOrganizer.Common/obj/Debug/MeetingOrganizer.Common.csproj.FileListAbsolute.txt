@@ -1,0 +1,2 @@
+C:\Meeting\MeetingOrganizer\MeetingOrganizer.Common\obj\Debug\MeetingOrganizer.Common.csprojResolveAssemblyReference.cache
+C:\Meeting\MeetingOrganizer\MeetingOrganizer.Common\obj\Debug\MeetingOrganizer.Common.csproj.CoreCompileInputs.cache

@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MODBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="C__MigrationHistory">
+    <Key>
+      <PropertyRef Name="MigrationId" />
+      <PropertyRef Name="ContextKey" />
+    </Key>
+    <Property Name="MigrationId" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ContextKey" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Model" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+    <Property Name="ProductVersion" Type="String" MaxLength="32" FixedLength="false" Unicode="true" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Departments">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MeetingPersonels">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MeetingID" Type="Int32" Nullable="false" />
+    <Property Name="PersonelID" Type="Int32" Nullable="false" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Meetings">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MeetingSubject" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="RoomID" Type="Int32" Nullable="false" />
+    <Property Name="StartingTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Personels" Relationship="Self.FK_dbo_Personels_dbo_Meetings_Meetings_ID" FromRole="Meetings" ToRole="Personels" />
+  </EntityType>
+  <EntityType Name="Personels">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PersonelRegistry" Type="Int32" Nullable="false" />
+    <Property Name="PersonelName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PersonelSurname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Department" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+    <Property Name="Meetings_ID" Type="Int32" />
+    <NavigationProperty Name="Meetings" Relationship="Self.FK_dbo_Personels_dbo_Meetings_Meetings_ID" FromRole="Personels" ToRole="Meetings" />
+  </EntityType>
+  <EntityType Name="Rooms">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoomName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_dbo_Personels_dbo_Meetings_Meetings_ID">
+    <End Role="Meetings" Type="Self.Meetings" Multiplicity="0..1" />
+    <End Role="Personels" Type="Self.Personels" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Meetings">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Personels">
+        <PropertyRef Name="Meetings_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MODBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="C__MigrationHistory" EntityType="Self.C__MigrationHistory" />
+    <EntitySet Name="Departments" EntityType="Self.Departments" />
+    <EntitySet Name="MeetingPersonels" EntityType="Self.MeetingPersonels" />
+    <EntitySet Name="Meetings" EntityType="Self.Meetings" />
+    <EntitySet Name="Personels" EntityType="Self.Personels" />
+    <EntitySet Name="Rooms" EntityType="Self.Rooms" />
+    <AssociationSet Name="FK_dbo_Personels_dbo_Meetings_Meetings_ID" Association="Self.FK_dbo_Personels_dbo_Meetings_Meetings_ID">
+      <End Role="Meetings" EntitySet="Meetings" />
+      <End Role="Personels" EntitySet="Personels" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
