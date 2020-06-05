@@ -1,1 +1,1 @@
-# MeetingOrganizer
+# MVC/MeetingOrganizer
